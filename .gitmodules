@@ -1,0 +1,9 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/JuHwiSang/GazamyTalk-client.git
+[submodule "server"]
+	path = server
+	url = https://github.com/JuHwiSang/GazamyTalk-server.git
+[submodule "containers/servers/api-server"]
+	path = containers/servers/api-server
+	url = https://github.com/GazamyTalk/api-server
