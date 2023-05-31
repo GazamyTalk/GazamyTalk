@@ -1,0 +1,6 @@
+.note
+.env
+
+containers/databases/mysql/data
+containers/proxy/letsencrypt
+containers/proxy/webroot

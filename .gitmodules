@@ -7,3 +7,9 @@
 [submodule "containers/servers/image-server"]
 	path = containers/servers/image-server
 	url = https://github.com/GazamyTalk/image-server
+[submodule "containers/servers/ws-server"]
+	path = containers/servers/ws-server
+	url = https://github.com/GazamyTalk/ws-server
+[submodule "containers/servers/web-server"]
+	path = containers/servers/web-server
+	url = https://github.com/GazamyTalk/web-server
