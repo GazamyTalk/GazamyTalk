@@ -4,7 +4,7 @@ services:
   reverse-proxy:
     image: nginx:latest
     container_name: gazamytalk-reverse-proxy
-    restart: always
+    # restart: always
     volumes:
       - ./containers/proxy/webroot:/usr/share/nginx/html
       - ./containers/proxy/letsencrypt:/etc/letsencrypt
@@ -17,25 +17,17 @@ services:
       - api-server
       - image-server
       - ws-server
-    command: chmod 744 /usr/run.sh & /usr/run.sh
-
-  certbot:
-    depends_on:
-      - reverse-proxy
-    image: certbot/certbot
-    container_name: gazamytalk-certbot
-    volumes:
-      - ./containers/proxy/webroot:/usr/share/nginx/html
-      - ./containers/proxy/letsencrypt:/etc/letsencrypt
-    command: certonly --dry-run --webroot --webroot-path=/usr/share/nginx/html --email ${ADMIN_EMAIL} --agree-tos --no-eff-email --keep-until-expiring -d ${DOMAIN_NAME}
-
+    ports:
+      - 80:80
+      - 433:433
+    command: /bin/bash /usr/run.sh
 
   api-server:
     container_name: gazamytalk-api-server
     build:
       context: ./containers/servers/api-server
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     environment:
       - LOGIN_DB_HOST=${LOGIN_DB_HOST}
       - LOGIN_DB_PORT=${LOGIN_DB_PORT}
@@ -48,6 +40,7 @@ services:
       - SESSION_SECRET=${SESSION_SECRET}
       - DEFAULT_USER_IMAGE_PATH="/images/defaultUserImage.png"
       - DEFAULT_ROOM_IMAGE_PATH="/images/defaultRoomImage.png"
+      - DEFAULT_USERNAME_MAX_LENGTH=40
     expose:
       - "80"
     depends_on:
@@ -60,7 +53,7 @@ services:
     build:
       context: ./containers/servers/image-server
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     environment:
       - CURRENT_SERVER_PATH="/images"
       - IMAGES_DIR_PATH="/app/images"
@@ -79,7 +72,7 @@ services:
     build:
       context: ./containers/servers/ws-server
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     environment:
       - SERVER_PORT=80
       - CHAT_DB_URI=${CHAT_DB_URI}
@@ -91,7 +84,7 @@ services:
   mysql:
     container_name: gazamytalk-mysql
     image: mysql:5.7.21
-    restart: always
+    # restart: always
     volumes:
       - "./containers/databases/mysql/init.d:/docker-entrypoint-initdb.d"
       - "./containers/databases/mysql/data:/var/lib/mysql"
@@ -106,14 +99,14 @@ services:
   redis:
     container_name: gazamytalk-redis
     image: redis:alpine
-    restart: always
+    # restart: always
     expose:
       - 6379
 
   mongodb:
     container_name: gazamytalk-mongodb
-    image: mongo:jammy
-    restart: always
+    image: mongo:4.4.18
+    # restart: always
     volumes:
       - "mongodata:/data/db"
     expose:
@@ -124,7 +117,7 @@ services:
     build:
       context: ./containers/servers/web-server
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     environment:
       - SESSION_SECRET=${SESSION_SECRET}
       - SESSION_STORE_URL=${SESSION_STORE_URL}

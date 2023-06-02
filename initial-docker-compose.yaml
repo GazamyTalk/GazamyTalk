@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    image: nginx:latest
+    container_name: gazamytalk-reverse-proxy
+    # restart: always
+    volumes:
+      - ./containers/proxy/webroot:/usr/share/nginx/html
+      - ./containers/proxy/letsencrypt:/etc/letsencrypt
+      - ./containers/proxy/run.sh:/usr/run.sh
+      - ./containers/proxy/initial_nginx.conf:/usr/nginx/nginx.conf
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    ports:
+      - 80:80
+    command: /bin/bash /usr/run.sh
+
+  certbot:
+    depends_on:
+      - reverse-proxy
+    image: certbot/certbot
+    container_name: gazamytalk-certbot
+    volumes:
+      - ./containers/proxy/webroot:/usr/share/nginx/html
+      - ./containers/proxy/letsencrypt:/etc/letsencrypt
+    command: certonly --webroot --webroot-path=/usr/share/nginx/html --email ${ADMIN_EMAIL} --agree-tos --no-eff-email --keep-until-expiring -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}
