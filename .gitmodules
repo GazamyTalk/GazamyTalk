@@ -13,3 +13,6 @@
 [submodule "containers/servers/web-server"]
 	path = containers/servers/web-server
 	url = https://github.com/GazamyTalk/web-server
+[submodule "containers/proxy"]
+	path = containers/proxy
+	url = https://github.com/GazamyTalk/proxy
