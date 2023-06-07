@@ -38,8 +38,8 @@ services:
       - CHAT_DB_URI=${CHAT_DB_URI}
       - SESSION_STORE_URL=${SESSION_STORE_URL}
       - SESSION_SECRET=${SESSION_SECRET}
-      - DEFAULT_USER_IMAGE_PATH="/images/defaultUserImage.png"
-      - DEFAULT_ROOM_IMAGE_PATH="/images/defaultRoomImage.png"
+      - DEFAULT_USER_IMAGE_PATH=/images/defaultUserImage.png
+      - DEFAULT_ROOM_IMAGE_PATH=/images/defaultRoomImage.png
       - DEFAULT_USERNAME_MAX_LENGTH=40
     expose:
       - "80"
@@ -55,8 +55,8 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      - CURRENT_SERVER_PATH="/images"
-      - IMAGES_DIR_PATH="/app/images"
+      - CURRENT_SERVER_PATH=/images
+      - IMAGES_DIR_PATH=/app/images
       - SESSION_STORE_URL=${SESSION_STORE_URL}
       - SESSION_SECRET=${SESSION_SECRET}
       - SERVER_PORT=80
