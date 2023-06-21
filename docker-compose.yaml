@@ -122,6 +122,7 @@ services:
     environment:
       - SESSION_SECRET=${SESSION_SECRET}
       - SESSION_STORE_URL=${SESSION_STORE_URL}
+      - DOMAIN_NAME=${DOMAIN_NAME}
     depends_on:
       - redis
     expose:
