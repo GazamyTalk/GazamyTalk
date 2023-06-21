@@ -38,6 +38,7 @@ services:
       - CHAT_DB_URI=${CHAT_DB_URI}
       - SESSION_STORE_URL=${SESSION_STORE_URL}
       - SESSION_SECRET=${SESSION_SECRET}
+      - SERVER_DOMAIN=${DOMAIN_NAME}
       - DEFAULT_USER_IMAGE_PATH=/images/defaultUserImage.png
       - DEFAULT_ROOM_IMAGE_PATH=/images/defaultRoomImage.png
       - DEFAULT_USERNAME_MAX_LENGTH=40
